@@ -1,8 +1,9 @@
 'use client'
 import { motion } from 'motion/react'
-import { XIcon } from 'lucide-react'
+import { XIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { Spotlight } from '@/components/ui/spotlight'
 import { Magnetic } from '@/components/ui/magnetic'
+import { useState } from 'react'
 import {
   MorphingDialog,
   MorphingDialogTrigger,
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/morphing-dialog'
 import Link from 'next/link'
 import { AnimatedBackground } from '@/components/ui/animated-background'
+import { ProjectMedia } from '@/components/ui/project-media'
 import {
   PROJECTS,
   WORK_EXPERIENCE,
@@ -37,56 +39,6 @@ const VARIANTS_SECTION = {
 
 const TRANSITION_SECTION = {
   duration: 0.3,
-}
-
-type ProjectVideoProps = {
-  src: string
-}
-
-function ProjectVideo({ src }: ProjectVideoProps) {
-  return (
-    <MorphingDialog
-      transition={{
-        type: 'spring',
-        bounce: 0,
-        duration: 0.3,
-      }}
-    >
-      <MorphingDialogTrigger>
-        <video
-          src={src}
-          autoPlay
-          loop
-          muted
-          className="aspect-video w-full cursor-zoom-in rounded-xl"
-        />
-      </MorphingDialogTrigger>
-      <MorphingDialogContainer>
-        <MorphingDialogContent className="relative aspect-video rounded-2xl bg-zinc-50 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950 dark:ring-zinc-800/50">
-          <video
-            src={src}
-            autoPlay
-            loop
-            muted
-            className="aspect-video h-[50vh] w-full rounded-xl md:h-[70vh]"
-          />
-        </MorphingDialogContent>
-        <MorphingDialogClose
-          className="fixed top-6 right-6 h-fit w-fit rounded-full bg-white p-1"
-          variants={{
-            initial: { opacity: 0 },
-            animate: {
-              opacity: 1,
-              transition: { delay: 0.3, duration: 0.1 },
-            },
-            exit: { opacity: 0, transition: { duration: 0 } },
-          }}
-        >
-          <XIcon className="h-5 w-5 text-zinc-500" />
-        </MorphingDialogClose>
-      </MorphingDialogContainer>
-    </MorphingDialog>
-  )
 }
 
 function MagneticSocialLink({
@@ -137,8 +89,7 @@ export default function Personal() {
       >
         <div className="flex-1">
           <p className="text-zinc-600 dark:text-zinc-400">
-            Focused on creating intuitive and performant web experiences.
-            Bridging the gap between design and development.
+            Crafting intuitive, high-performance web solutions by seamlessly blending design and development expertise.
           </p>
         </div>
       </motion.section>
@@ -147,28 +98,69 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={TRANSITION_SECTION}
       >
-        <h3 className="mb-5 text-lg font-medium">Selected Projects</h3>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {PROJECTS.map((project) => (
-            <div key={project.name} className="space-y-2">
-              <div className="relative rounded-2xl bg-zinc-50/40 p-1 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50">
-                <ProjectVideo src={project.video} />
-              </div>
-              <div className="px-1">
-                <a
-                  className="font-base group relative inline-block font-[450] text-zinc-900 dark:text-zinc-50"
-                  href={project.link}
-                  target="_blank"
-                >
-                  {project.name}
-                  <span className="absolute bottom-0.5 left-0 block h-[1px] w-full max-w-0 bg-zinc-900 transition-all duration-200 group-hover:max-w-full"></span>
-                </a>
-                <p className="text-base text-zinc-600 dark:text-zinc-400">
-                  {project.description}
-                </p>
-              </div>
+        <h3 className="mb-5 text-lg font-medium">My Mission</h3>
+        <p className="text-zinc-600 dark:text-zinc-400">
+          My mission is to translate complex challenges into elegant, user-centric digital solutions. I'm passionate about building innovative web experiences through intuitive design and clean, efficient code, aiming to empower users and deliver lasting impact.
+        </p>
+      </motion.section>
+
+      <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-50 mb-3">My Toolkit & Background</h3>
+        <p className="text-base text-zinc-600 dark:text-zinc-400 mb-6">
+          A look into my core technical skills and the educational background that underpins my work.
+        </p>
+
+        <div className="rounded-2xl bg-zinc-50/40 p-4 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50 sm:p-6 mb-6">
+          <div className="flex flex-col space-y-3">
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">Languages</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">JavaScript (ES6+), TypeScript, Python, Java, C++</p>
             </div>
-          ))}
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">Frontend Development</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">React, Next.js, HTML5, CSS3, Tailwind CSS</p>
+            </div>
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">Backend Development</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Node.js, FastAPI</p>
+            </div>
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">Databases</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">PostgreSQL, MongoDB</p>
+            </div>
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">DevOps & Version Control</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Git, GitHub, Vercel, Docker</p>
+            </div>
+            <div>
+              <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50 mb-0.5">Design Tools</h5>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Figma</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl bg-zinc-50/40 p-4 ring-1 ring-zinc-200/50 ring-inset dark:bg-zinc-950/40 dark:ring-zinc-800/50 sm:p-6">
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">New Jersey Institute of Technology (NJIT)</h5>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">BS, Web & Information Systems</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Newark, NJ</p>
+              </div>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 whitespace-nowrap">Spring 2025</p>
+            </div>
+            <div className="flex items-start justify-between">
+              <div>
+                <h5 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">Ocean County College</h5>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">AS, Computer Science</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Toms River, NJ</p>
+              </div>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 whitespace-nowrap">Fall 2022</p>
+            </div>
+          </div>
         </div>
       </motion.section>
 
@@ -245,6 +237,36 @@ export default function Personal() {
           </AnimatedBackground>
         </div>
       </motion.section>
+
+      {/* <motion.section
+        variants={VARIANTS_SECTION}
+        transition={TRANSITION_SECTION}
+      >
+        <h3 className="mb-5 text-lg font-medium">Projects</h3>
+        <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
+          {PROJECTS.map((project) => (
+            <div key={project.id} className="group flex flex-col space-y-3">
+              {(project.screenshots && project.screenshots.length > 0) || project.video ? (
+                <ProjectMedia 
+                  screenshots={project.screenshots} 
+                  videoSrc={project.video} 
+                  altText={project.name} 
+                />
+              ) : (
+                <div className="aspect-video w-full rounded-xl bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+                  <p className="text-zinc-500 dark:text-zinc-400">No preview available</p>
+                </div>
+              )}
+              <div>
+                <h4 className="font-normal text-zinc-900 dark:text-zinc-100">
+                  {project.name}
+                </h4>
+                <p className="text-zinc-500 dark:text-zinc-400">{project.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.section> */}
 
       <motion.section
         variants={VARIANTS_SECTION}

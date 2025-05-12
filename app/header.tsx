@@ -7,7 +7,7 @@ export function Header() {
     <header className="mb-8 flex items-center justify-between">
       <div>
         <Link href="/" className="font-medium text-black dark:text-white">
-          Julien Nim
+          Dhanesh Khemraj
         </Link>
         <TextEffect
           as="p"
@@ -16,9 +16,23 @@ export function Header() {
           className="text-zinc-600 dark:text-zinc-500"
           delay={0.5}
         >
-          Design Engineer
+          Web Developer
         </TextEffect>
       </div>
+      <nav className="flex items-center space-x-6 text-sm font-medium">
+        <Link
+          className="transition-colors hover:text-foreground/80 text-foreground/60"
+          href="/projects"
+        >
+          Projects
+        </Link>
+        <Link
+          className="transition-colors hover:text-foreground/80 text-foreground/60"
+          href="/contact"
+        >
+          Contact
+        </Link>
+      </nav>
     </header>
   )
 }
