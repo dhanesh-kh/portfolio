@@ -44,24 +44,48 @@ function useMorphingDialog() {
 export type MorphingDialogProviderProps = {
   children: React.ReactNode
   transition?: Transition
+  open?: boolean
+  onOpenChange?: (isOpen: boolean) => void
 }
 
 function MorphingDialogProvider({
   children,
   transition,
+  open,
+  onOpenChange,
 }: MorphingDialogProviderProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [internalIsOpen, setInternalIsOpen] = useState(false)
   const uniqueId = useId()
   const triggerRef = useRef<HTMLDivElement>(null!)
 
+  useEffect(() => {
+    if (open !== undefined) {
+      setInternalIsOpen(open)
+    }
+  }, [open])
+
+  const handleSetIsOpen = useCallback(
+    (newIsOpen: boolean | ((prevState: boolean) => boolean)) => {
+      const resolvedIsOpen = typeof newIsOpen === 'function' ? newIsOpen(internalIsOpen) : newIsOpen
+
+      if (open === undefined) {
+        setInternalIsOpen(resolvedIsOpen)
+      }
+      if (onOpenChange) {
+        onOpenChange(resolvedIsOpen)
+      }
+    },
+    [internalIsOpen, open, onOpenChange]
+  )
+
   const contextValue = useMemo(
     () => ({
-      isOpen,
-      setIsOpen,
+      isOpen: open !== undefined ? open : internalIsOpen,
+      setIsOpen: handleSetIsOpen,
       uniqueId,
       triggerRef,
     }),
-    [isOpen, uniqueId],
+    [open, internalIsOpen, handleSetIsOpen, uniqueId]
   )
 
   return (
@@ -74,11 +98,13 @@ function MorphingDialogProvider({
 export type MorphingDialogProps = {
   children: React.ReactNode
   transition?: Transition
+  open?: boolean
+  onOpenChange?: (isOpen: boolean) => void
 }
 
-function MorphingDialog({ children, transition }: MorphingDialogProps) {
+function MorphingDialog({ children, transition, open, onOpenChange }: MorphingDialogProps) {
   return (
-    <MorphingDialogProvider>
+    <MorphingDialogProvider open={open} onOpenChange={onOpenChange}>
       <MotionConfig transition={transition}>{children}</MotionConfig>
     </MorphingDialogProvider>
   )
@@ -110,7 +136,7 @@ function MorphingDialogTrigger({
         setIsOpen(!isOpen)
       }
     },
-    [isOpen, setIsOpen],
+    [isOpen, setIsOpen]
   )
 
   return (
