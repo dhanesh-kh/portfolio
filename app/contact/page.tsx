@@ -1,8 +1,8 @@
 'use client'
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import { Github, Linkedin, Mail, Phone } from 'lucide-react' 
-import { SOCIAL_LINKS, EMAIL } from '../data' 
+import { Github, Linkedin } from 'lucide-react' 
+import { SOCIAL_LINKS } from '../data' 
 
 const VARIANTS_CONTAINER = {
   hidden: { opacity: 0 },
@@ -101,20 +101,9 @@ export default function ContactPage() {
 
         <div className="mt-6">
           <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
-            Or reach out directly:
+            Or connect via social media:
           </p>
           <div className="mt-3 flex flex-wrap justify-center gap-4 text-sm text-zinc-800 dark:text-zinc-200">
-            <a
-              href={`mailto:${EMAIL}`}
-              className="group flex items-center gap-2 rounded-md px-3 py-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-            >
-              <Mail className="h-4 w-4 text-zinc-500 group-hover:text-blue-500" />
-              {EMAIL}
-            </a>
-            <div className="group flex items-center gap-2 rounded-md px-3 py-2">
-              <Phone className="h-4 w-4 text-zinc-500" />
-              <span>(732) 691-8984</span>
-            </div>
             {githubLink && (
               <a href={githubLink} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400 transition-colors duration-200 flex items-center">
                 <Github className="h-5 w-5 mr-1" /> GitHub

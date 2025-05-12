@@ -100,5 +100,3 @@ export const SOCIAL_LINKS: SocialLink[] = [
     link: 'https://www.linkedin.com/in/dhanesh-khemraj',
   },
 ]
-
-export const EMAIL = 'dk584@njit.edu'
